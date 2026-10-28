@@ -1,0 +1,9 @@
+subject_type,subject_id_source,predicate,object_type,object_id_source,edge_properties,condition
+Process,pid,RUNS_ON,Host,host,"event_type,outcome","pid not null AND host not null"
+Process,pid,INSTANCE_OF,Program,program,"event_type","program not null AND pid not null"
+IP,src_ip,QUERIES,Domain,qname,"qtype,event_type,outcome","src_ip not null AND qname not null AND event_type indicates query"
+Process,pid,RECEIVES_FROM,IP,src_ip,"event_type","pid not null AND src_ip not null AND event_type indicates query"
+Process,pid,FORWARDS_TO,IP,dst_ip,"event_type","pid not null AND dst_ip not null AND event_type indicates forwarded"
+Domain,qname,RESOLVES_TO,AnswerKind,answer_kind,"status_code,response_source,event_type,outcome","qname not null AND answer_kind not null AND event_type in (reply,cached)"
+Process,pid,ANSWERS,Domain,qname,"answer_kind,status_code,response_source,event_type,outcome","pid not null AND qname not null AND event_type in (reply,cached)"
+Domain,qname,HAS_STATUS_CODE,Object,status_code,"event_type","qname not null AND status_code not null"

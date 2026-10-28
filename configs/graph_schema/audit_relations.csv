@@ -1,0 +1,11 @@
+subject_type,subject_id_source,predicate,object_type,object_id_source,edge_properties,condition
+Process,pid,RUNS_ON,Host,host,"event_type,event_id,outcome",pid not null AND host not null
+Process,pid,INSTANCE_OF,Program,process_exe,"process_name,process_title",process_exe not null
+Process,ppid,PARENT_OF,Process,pid,"event_type,event_id",ppid not null AND pid not null
+User,user,INITIATES_SESSION,Session,session_id,"event_type,event_id,outcome",user not null AND session_id not null
+Session,session_id,ON_TTY,Terminal,tty,"event_type,event_id",tty not null AND session_id not null
+Session,session_id,HAS_TERMINAL,Terminal,terminal,"event_type,event_id",terminal not null AND session_id not null
+Session,session_id,FROM_IP,IP,src_ip,"event_type,event_id",src_ip not null AND session_id not null
+Process,pid,EXECUTES,Command,command,"cwd,event_type,event_id,outcome",command not null AND pid not null
+Process,pid,IN_CWD,Object,cwd,"event_type,event_id",cwd not null AND pid not null
+Process,pid,CALLS,Syscall,syscall,"event_type,event_id,outcome",syscall not null AND pid not null

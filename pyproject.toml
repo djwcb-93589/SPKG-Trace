@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "spkg-workflow"
+version = "0.1.0"
+description = "SPKG-Trace backend for schema-guided log extraction and evidence-grounded graph preparation."
+requires-python = ">=3.10"
+dependencies = [
+  "openai>=1.0.0",
+  "pandas>=2.0.0",
+  "numpy>=1.24.0",
+  "tqdm>=4.66.0",
+  "PyYAML>=6.0.0",
+  "python-dotenv>=1.0.0",
+]
+
+[project.scripts]
+spkg-workflow = "spkg_workflow.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+

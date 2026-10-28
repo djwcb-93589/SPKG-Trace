@@ -1,0 +1,32 @@
+version: 1
+# Conservative identities: no inferred cross-host/account/process correlation.
+# Supported scopes: event, dataset, host (dataset fallback), global.
+node_types:
+  Host: {scope: dataset}
+  Program: {scope: host}
+  Process: {scope: event}
+  User: {scope: host}
+  Session: {scope: event}
+  Terminal: {scope: host}
+  IP: {scope: dataset}
+  Domain: {scope: global}
+  Command: {scope: host}
+  Object: {scope: host, distinguish_field: true}
+  Syscall: {scope: dataset}
+  AnswerKind: {scope: dataset}
+# Legacy 'indicates' is an explicit finite alias set, never substring matching.
+# Legacy aliases only. Custom CSVs should use explicit `field in (a,b)` conditions.
+# New node types default to event; optional CSV subject_scope/object_scope overrides
+# the scope without editing this file. Other per-type properties are preserved.
+indicates:
+  event_type:
+    su: [su_auth, su_session, su]
+    sudo: [sudo_cmd, sudo]
+    http_request: [http_request]
+    access_denied: [access_denied]
+    query: [query]
+    forwarded: [forwarded]
+    tls_reset: [tls_reset]
+    inactivity_timeout: [inactivity_timeout]
+  event_action:
+    restarted: [restarted]

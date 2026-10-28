@@ -1,0 +1,13 @@
+subject_type,subject_id_source,predicate,object_type,object_id_source,edge_properties,condition
+Program,program,RUNS_ON,Host,host,"event_type,event_action,outcome","program not null AND host not null"
+Process,pid,RUNS_ON,Host,host,"event_type,event_action,outcome","pid not null AND host not null"
+Process,pid,INSTANCE_OF,Program,program,"event_type,event_action","pid not null AND program not null"
+IP,src_ip,REQUESTS,Object,object_name,"status_code,outcome","src_ip not null AND object_name not null AND event_type indicates http_request"
+User,user,REQUESTS,Object,object_name,"status_code,outcome","user not null AND object_name not null AND event_type indicates http_request"
+Process,pid,SERVES,Object,object_name,"status_code,outcome","pid not null AND object_name not null AND event_type indicates http_request"
+Program,program,SERVES,Object,object_name,"status_code,outcome","program not null AND object_name not null AND event_type indicates http_request AND pid is null"
+Process,pid,DENIES,Object,object_name,"severity,error_code,outcome","pid not null AND object_name not null AND event_type indicates access_denied"
+Program,program,DENIES,Object,object_name,"severity,error_code,outcome","program not null AND object_name not null AND event_type indicates access_denied AND pid is null"
+Process,pid,FAILS_ON,Object,object_name,"severity,error_code,outcome","pid not null AND object_name not null AND event_type in (script_not_found,negotiation_error,directory_index_forbidden,php_error)"
+Program,program,FAILS_ON,Object,object_name,"severity,error_code,outcome","program not null AND object_name not null AND event_type in (script_not_found,negotiation_error,directory_index_forbidden,php_error) AND pid is null"
+Object,referer,LEADS_TO,Object,object_name,"event_type,event_action","referer not null AND referer != '-' AND object_name not null AND event_type indicates http_request"

@@ -1,0 +1,13 @@
+subject_type,subject_id_source,predicate,object_type,object_id_source,edge_properties,condition
+Process,pid,RUNS_ON,Host,host,"event_type,event_action,outcome","pid not null AND host not null"
+Process,pid,INSTANCE_OF,Program,program,"event_type,event_action","program not null AND pid not null"
+User,user,INITIATES_SESSION,Session,session_id,"event_type,event_action,outcome","session_id not null AND user not null"
+Session,session_id,ON_TTY,Terminal,tty,"event_type,event_action","session_id not null AND tty not null"
+Session,session_id,FROM_IP,IP,src_ip,"src_port,event_type,event_action","session_id not null AND src_ip not null"
+User,invoker_user,EXECUTES,Command,command,"target_user,cwd,event_type,event_action,outcome","invoker_user not null AND command not null"
+User,actor_user,EXECUTES,Command,command,"target_user,cwd,event_type,event_action,outcome","actor_user not null AND command not null"
+Process,pid,EXECUTES,Command,command,"cwd,event_type,event_action,outcome","pid not null AND command not null"
+Process,pid,IN_CWD,Object,cwd,"event_type,event_action","pid not null AND cwd not null"
+User,actor_user,SWITCHES_TO,User,target_user,"event_type,event_action,outcome","actor_user not null AND target_user not null AND event_type indicates su"
+User,invoker_user,ELEVATES_TO,User,target_user,"event_type,event_action,outcome","invoker_user not null AND target_user not null AND event_type indicates sudo"
+Session,session_id,HAS_PAM_SERVICE,Object,pam_service,"pam_action,event_type,event_action","pam_service not null AND session_id not null"

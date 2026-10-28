@@ -1,0 +1,70 @@
+version: 1
+
+project:
+  results_dir: results
+  sample_size: 3
+  sample_seed: 42
+
+provider:
+  backend: vllm
+  base_url: http://127.0.0.1:8000/v1
+  model: your-served-model-id
+  auth_required: false
+  # prompt mode does not require vLLM structured-output/reasoning compatibility.
+  json_mode: prompt
+  chat_template_kwargs: {}
+  timeout_seconds: 300
+  max_retries: 5
+  temperature: 0.0
+  disable_thinking: false
+
+librelog:
+  similarity: jaccard
+  self_reflection: true
+  max_tokens: 1024
+  grouping:
+    depth: 4
+    similarity_threshold: 0.5
+    masks:
+      - '(\d+\.){3}\d+(:\d+)?'
+      - '\b\d{2}:\d{2}:\d{2}(?:\.\d+)?\b'
+      - '\b[0-9a-fA-F]{8,}\b'
+      - '/[^\s,]+'
+      - '([\w-]+\.)+[\w-]+'
+
+field_semantics:
+  prompt: prompts/field_semantics.txt
+  semantic_review: true
+  max_tokens: 4096
+  validation_retries: 2
+  temperature: 0.0
+
+poi_mapping:
+  prompt: prompts/poi_mapping.txt
+  max_tokens: 4096
+  temperature: 0.0
+  forbid_targets:
+    - log_source
+
+parameter_extraction:
+  prompt: prompts/parameter_extraction.txt
+  semantic_review: true
+  review_prompt: prompts/parameter_review.txt
+  catalog_review: true
+  catalog_review_prompt: prompts/catalog_review.txt
+  # Model, temperature and max_tokens inherit the semantic-alignment configuration.
+  batch_size: 1
+  max_workers: 2
+  validation_retries: 2
+  upstream_retries: 1
+  cache: true
+  keep_unmapped_fields: true
+  error_file: extraction_errors.jsonl
+
+knowledge_package:
+  include_poi_schema: true
+  include_relation_schema: true
+  prepare_neo4j_import: true
+  graph_export_policy: configs/graph_export.yaml
+  build_graph: false
+  write_neo4j: false

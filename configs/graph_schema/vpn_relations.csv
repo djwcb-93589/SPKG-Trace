@@ -1,0 +1,12 @@
+subject_type,subject_id_source,predicate,object_type,object_id_source,edge_properties,condition
+User,user,INITIATES_SESSION,Session,session_id,"timestamp,event_type,event_action,outcome",user not null AND session_id not null
+Session,session_id,FROM_IP,IP,src_ip,"timestamp,src_port,event_type,event_action,outcome",session_id not null AND src_ip not null
+Session,session_id,ASSIGNED_IP,IP,virtual_ip,"timestamp,event_type,event_action,outcome",session_id not null AND virtual_ip not null
+Session,session_id,USES_TLS_VERSION,Object,tls_version,"timestamp,event_type,event_action",session_id not null AND tls_version not null
+Session,session_id,USES_CIPHER_SUITE,Object,cipher_suite,"timestamp,event_type,event_action",session_id not null AND cipher_suite not null
+Session,session_id,USES_HMAC_ALG,Object,hmac_alg,"timestamp,event_type,event_action",session_id not null AND hmac_alg not null
+Session,session_id,HAS_CONTROL_MESSAGE,Object,control_message,"timestamp,status_code,event_type,event_action,outcome",session_id not null AND control_message not null
+Session,session_id,HAS_PEER_INFO,Object,peer_info_key,"timestamp,peer_info_value,event_type",session_id not null AND peer_info_key not null AND peer_info_value not null
+Program,program,RESETS,Session,session_id,"timestamp,event_type,event_action,outcome",program not null AND session_id not null AND event_type indicates tls_reset
+Program,program,TIMES_OUT,Session,session_id,"timestamp,event_type,event_action,outcome",program not null AND session_id not null AND event_type indicates inactivity_timeout
+Program,program,RESTARTS,Session,session_id,"timestamp,event_type,event_action,outcome",program not null AND session_id not null AND event_action indicates restarted

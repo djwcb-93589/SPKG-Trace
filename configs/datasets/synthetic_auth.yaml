@@ -1,0 +1,12 @@
+version: 1
+dataset_id: synthetic_auth
+family: auth
+log_source: auth
+raw_log: examples/synthetic_auth/input.log
+baseline_parsed_csv: null
+poi_schema: configs/poi/auth.csv
+relation_schema: configs/graph_schema/auth_relations.csv
+mapping_overrides: null
+defaults:
+  host: ''
+  program: ''
